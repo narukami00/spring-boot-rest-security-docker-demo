@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.softeng.ums.entity.Admin;
@@ -17,11 +16,6 @@ import com.softeng.ums.repository.TeacherRepository;
 
 @Configuration
 public class DataSeeder {
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public CommandLineRunner seed(AdminRepository adminRepo, TeacherRepository teacherRepo, StudentRepository studentRepo, PasswordEncoder encoder) {
