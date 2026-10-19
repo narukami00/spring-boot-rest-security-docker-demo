@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -73,9 +74,16 @@ public class TeacherController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        if (!repo.existsById(id)) {
+    public ResponseEntity<?> delete(@PathVariable Long id, Authentication auth) {
+        Optional<Teacher> found = repo.findById(id);
+        if (found.isEmpty()) {
             return notFound("Teacher " + id + " does not exist");
+        }
+        // Deleting your own record would leave a live session pointing at a user
+        // that no longer exists. Refuse it rather than corrupting the login.
+        if (auth != null && found.get().getUsername().equals(auth.getName())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(ApiError.forbidden("You cannot delete your own account"));
         }
         repo.deleteById(id);
         return ResponseEntity.noContent().build();

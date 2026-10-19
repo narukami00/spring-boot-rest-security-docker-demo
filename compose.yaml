@@ -1,0 +1,40 @@
+services:
+
+  # ---- MySQL, running in its own container ----
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    # Only reachable from other containers on this compose network,
+    # not from your laptop. Safer than publishing 3306 to the host.
+    expose:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: university_db     # created automatically on first boot
+    volumes:
+      - db-data:/var/lib/mysql           # data survives container restarts
+
+    # Ask MySQL a question every 5s. Until it answers, 'app' stays waiting.
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  # ---- Your Spring Boot app ----
+  app:
+    build: .                            # build the image from the Dockerfile next to this file
+    restart: unless-stopped              # retry if the DB isn't reachable yet at boot
+    ports:
+      - "8080:8080"                     # host:container — this one IS public
+    environment:
+      # Override application.properties. In compose, 'db' is the hostname.
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/university_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      db:
+        condition: service_healthy      # do not start until MySQL says it is ready
+
+volumes:
+  db-data:

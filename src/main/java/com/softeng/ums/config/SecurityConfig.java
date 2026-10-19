@@ -29,6 +29,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
+                // HTML pages
+                .requestMatchers("/admins/**").hasRole("ADMIN")
+                .requestMatchers("/teachers/**").hasAnyRole("ADMIN", "TEACHER")
+                .requestMatchers("/students/**").hasAnyRole("ADMIN", "STUDENT")
+                // JSON API
                 .requestMatchers("/api/admins/**").hasRole("ADMIN")
                 .requestMatchers("/api/teachers/**").hasAnyRole("ADMIN", "TEACHER")
                 .requestMatchers("/api/students/**").hasAnyRole("ADMIN", "STUDENT")

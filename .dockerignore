@@ -1,0 +1,10 @@
+# Never send these into the Docker build. They are either huge or rebuildable.
+target/
+.git/
+.gitignore
+*.iml
+.idea/
+.vscode/
+Dockerfile
+compose.yaml
+README.md

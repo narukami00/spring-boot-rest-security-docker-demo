@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}">List</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
+</head>
+<body>
+    <header>
+        <h1>University Management System</h1>
+        <div class="user-info">
+            <a class="nav-link" href="/">Dashboard</a>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <div class="toolbar">
+            <h2 th:text="${title}">List</h2>
+            <a class="btn" th:href="@{'/' + ${basePath} + '/new'}">Add</a>
+        </div>
+
+        <div id="message"></div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th class="actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="rows">
+                <tr><td colspan="6" class="empty">Loading...</td></tr>
+            </tbody>
+        </table>
+    </main>
+
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    const basePath = /*[[${basePath}]]*/ 'admins';
+    const currentUsername = /*[[${currentUsername}]]*/ '';
+    const csrfToken = /*[[${_csrf.token}]]*/ '';
+    const csrfHeader = /*[[${_csrf.headerName}]]*/ 'X-CSRF-TOKEN';
+    const api = '/api/' + basePath;
+    const rows = document.getElementById('rows');
+    const messageBox = document.getElementById('message');
+
+    const showMessage = (text, kind) => {
+        messageBox.innerHTML = '';
+        const div = document.createElement('div');
+        div.className = 'flash ' + kind;
+        div.textContent = text;
+        messageBox.appendChild(div);
+    };
+
+    /** Read the JSON error body, falling back to the status code. */
+    const errorText = async (res) => {
+        if (res.status === 401) { window.location = '/login'; return ''; }
+        try {
+            const body = await res.json();
+            return body.message || ('Error ' + res.status);
+        } catch (e) {
+            return 'Error ' + res.status;
+        }
+    };
+
+    const cell = (text) => {
+        const td = document.createElement('td');
+        td.textContent = text;              // textContent, never innerHTML: API data is untrusted
+        return td;
+    };
+
+    async function load() {
+        const res = await fetch(api, { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) { rows.innerHTML = ''; showMessage(await errorText(res), 'error'); return; }
+
+        const items = await res.json();
+        rows.innerHTML = '';
+
+        if (items.length === 0) {
+            const tr = document.createElement('tr');
+            const td = cell('No records yet');
+            td.colSpan = 6;
+            td.className = 'empty';
+            tr.appendChild(td);
+            rows.appendChild(tr);
+            return;
+        }
+
+        items.forEach(item => {
+            const tr = document.createElement('tr');
+            [item.id, item.name, item.email, item.username, item.role].forEach(v => tr.appendChild(cell(v)));
+
+            const actions = document.createElement('td');
+            actions.className = 'actions';
+
+            const edit = document.createElement('a');
+            edit.className = 'btn btn-small';
+            edit.href = '/' + basePath + '/' + item.id + '/edit';
+            edit.textContent = 'Edit';
+            actions.appendChild(edit);
+
+            // No Delete on your own row: the API refuses it, so don't offer it.
+            if (item.username !== currentUsername) {
+                const form = document.createElement('form');
+                form.className = 'inline';
+                form.method = 'post';
+                const del = document.createElement('button');
+                del.type = 'submit';
+                del.className = 'btn btn-small btn-danger';
+                del.textContent = 'Delete';
+                del.addEventListener('click', (e) => { e.preventDefault(); remove(item.id); });
+                form.appendChild(del);
+                actions.appendChild(form);
+            }
+
+            tr.appendChild(actions);
+            rows.appendChild(tr);
+        });
+    }
+
+    async function remove(id) {
+        if (!confirm('Delete this record?')) return;
+        const res = await fetch(api + '/' + id, {
+            method: 'DELETE',
+            headers: { [csrfHeader]: csrfToken }
+        });
+        if (res.status === 204) {
+            showMessage('Deleted', 'success');
+            load();
+        } else {
+            showMessage(await errorText(res), 'error');
+        }
+    }
+
+    load();
+    /*]]>*/
+    </script>
+</body>
+</html>

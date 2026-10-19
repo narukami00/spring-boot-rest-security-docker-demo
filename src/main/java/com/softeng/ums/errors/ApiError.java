@@ -15,6 +15,10 @@ public record ApiError(int status, String error, String message) {
         return new ApiError(400, "bad_request", message);
     }
 
+    public static ApiError forbidden(String message) {
+        return new ApiError(403, "forbidden", message);
+    }
+
     public static ApiError serverError(String message) {
         return new ApiError(500, "server_error", message);
     }

@@ -9,7 +9,7 @@
     <header>
         <h1>University Management System</h1>
         <div class="user-info">
-            <span th:text="${username}">username</span>
+            <span th:text="${name}">name</span>
             <form th:action="@{/logout}" method="post">
                 <button type="submit" class="logout-btn">Logout</button>
             </form>
@@ -17,24 +17,27 @@
     </header>
 
     <main>
-        <p>You are signed in as <strong th:text="${username}">username</strong>.</p>
+        <p>You are signed in as <strong th:text="${name}">name</strong>.</p>
 
-        <h2>Available actions</h2>
+        <h2>Manage</h2>
 
         <div class="cards">
             <div class="card" th:if="${isAdmin}">
                 <h3>Admins</h3>
-                <a href="/api/admins">View all admins</a>
+                <p>View, create, edit and delete admins.</p>
+                <a href="/admins">Open</a>
             </div>
 
             <div class="card" th:if="${isAdmin or isTeacher}">
                 <h3>Teachers</h3>
-                <a href="/api/teachers">View all teachers</a>
+                <p>View, create, edit and delete teachers.</p>
+                <a href="/teachers">Open</a>
             </div>
 
             <div class="card" th:if="${isAdmin or isStudent}">
                 <h3>Students</h3>
-                <a href="/api/students">View all students</a>
+                <p>View, create, edit and delete students.</p>
+                <a href="/students">Open</a>
             </div>
         </div>
     </main>
