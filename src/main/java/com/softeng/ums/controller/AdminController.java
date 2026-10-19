@@ -2,7 +2,9 @@ package com.softeng.ums.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.softeng.ums.entity.Admin;
+import com.softeng.ums.errors.ApiError;
 import com.softeng.ums.repository.AdminRepository;
 
 @RestController
@@ -35,10 +38,12 @@ public class AdminController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Admin> get(@PathVariable Long id) {
-        return repo.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> get(@PathVariable Long id) {
+        Optional<Admin> found = repo.findById(id);
+        if (found.isEmpty()) {
+            return notFound("Admin " + id + " does not exist");
+        }
+        return ResponseEntity.ok(found.get());
     }
 
     @PostMapping
@@ -51,24 +56,34 @@ public class AdminController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Admin> update(@PathVariable Long id, @RequestBody Admin admin) {
-        return repo.findById(id).map(existing -> {
-            existing.setName(admin.getName());
-            existing.setEmail(admin.getEmail());
-            existing.setUsername(admin.getUsername());
-            if (admin.getPassword() != null && !admin.getPassword().isBlank()) {
-                existing.setPassword(encoder.encode(admin.getPassword()));
-            }
-            return ResponseEntity.ok(repo.save(existing));
-        }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Admin admin) {
+        Optional<Admin> found = repo.findById(id);
+        if (found.isEmpty()) {
+            return notFound("Admin " + id + " does not exist");
+        }
+
+        Admin existing = found.get();
+        existing.setName(admin.getName());
+        existing.setEmail(admin.getEmail());
+        existing.setUsername(admin.getUsername());
+        // Password is only replaced when the request supplies one. A null would
+        // otherwise overwrite a working hash and lock the account out permanently.
+        if (admin.getPassword() != null && !admin.getPassword().isBlank()) {
+            existing.setPassword(encoder.encode(admin.getPassword()));
+        }
+        return ResponseEntity.ok(repo.save(existing));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         if (!repo.existsById(id)) {
-            return ResponseEntity.notFound().build();
+            return notFound("Admin " + id + " does not exist");
         }
         repo.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    private ResponseEntity<ApiError> notFound(String message) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiError.notFound(message));
     }
 }
