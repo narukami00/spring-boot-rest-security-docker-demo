@@ -1,0 +1,123 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------< com.softeng:university-management-system >--------------
+[INFO] Building UniversityManagementSystem 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ university-management-system ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 7 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ university-management-system ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ university-management-system ---
+[INFO] skip non existing resourceDirectory F:\__Projects\Soft_Eng\UniversityManagementSystem\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ university-management-system ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ university-management-system ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.softeng.ums.it.TeacherApiCrudIT
+22:16:56.306 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.softeng.ums.it.TeacherApiCrudIT]: TeacherApiCrudIT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:16:56.427 [main] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+22:16:56.433 [main] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+22:16:56.573 [main] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 2.0.5
+22:16:56.944 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+22:16:57.665 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+22:16:57.667 [main] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+22:16:57.701 [main] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.4.3
+  API Version: 1.54
+  Operating System: Docker Desktop (containerized)
+  Total Memory: 15931 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+22:16:58.256 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Creating container for image: testcontainers/ryuk:0.14.0
+22:16:58.326 [main] INFO org.testcontainers.utility.RegistryAuthLocator -- Failure when attempting to lookup auth config. Please ignore if you don't have images in an authenticated registry. Details: (dockerImageName: testcontainers/ryuk:0.14.0, configFile: C:\Users\Rafsan Riasat\.docker\config.json, configEnv: DOCKER_AUTH_CONFIG). Falling back to docker-java default behaviour. Exception message: 
+22:17:00.029 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 is starting: b5f18551b71f42b360426b30fecd5868d33294a471f6af3fbb996a2e10f198bb
+22:17:02.173 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 started in PT3.9161767S
+22:17:02.180 [main] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+22:17:02.181 [main] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+22:17:02.181 [main] INFO org.testcontainers.DockerClientFactory -- ?? Docker server version should be at least 1.6.0
+22:17:02.281 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.softeng.ums.UniversityManagementSystemApplication for test class com.softeng.ums.it.TeacherApiCrudIT
+22:17:02.397 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.softeng.ums.it.TeacherApiCrudIT]: TeacherApiCrudIT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:17:02.399 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.softeng.ums.it.IntegrationBase]: IntegrationBase does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:17:02.416 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.softeng.ums.UniversityManagementSystemApplication for test class com.softeng.ums.it.TeacherApiCrudIT
+22:17:02.465 [main] INFO tc.mysql:8.4 -- Creating container for image: mysql:8.4
+22:17:04.286 [main] INFO tc.mysql:8.4 -- Container mysql:8.4 is starting: ab7ab4d0a993336c0f508a51dd58be264bc53ad765fceb01d4191c6b006420b7
+22:17:06.285 [main] INFO tc.mysql:8.4 -- Waiting for database connection to become available at jdbc:mysql://localhost:59245/test using query 'SELECT 1'
+22:19:04.973 [main] INFO tc.mysql:8.4 -- Container mysql:8.4 started in PT2M2.5083433S
+22:19:04.973 [main] INFO tc.mysql:8.4 -- Container is started (JDBC URL: jdbc:mysql://localhost:59245/test)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.8)
+
+2026-11-03T22:19:05.519+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] com.softeng.ums.it.TeacherApiCrudIT      : Starting TeacherApiCrudIT using Java 17.0.12 with PID 10248 (started by Rafsan Riasat in F:\__Projects\Soft_Eng\UniversityManagementSystem)
+2026-11-03T22:19:05.521+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] com.softeng.ums.it.TeacherApiCrudIT      : No active profile set, falling back to 1 default profile: "default"
+2026-11-03T22:19:07.408+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-03T22:19:07.536+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 109 ms. Found 3 JPA repository interfaces.
+2026-11-03T22:19:09.421+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-11-03T22:19:09.526+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.24.Final
+2026-11-03T22:19:10.374+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-03T22:19:10.417+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-03T22:19:10.608+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3abd7b20
+2026-11-03T22:19:10.610+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-03T22:19:10.775+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:59245/test]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.4.11
+	Default catalog/schema: test/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-03T22:19:12.342+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: create table admin (id bigint not null auto_increment, email varchar(255), name varchar(255), password varchar(255), role varchar(255), username varchar(255), primary key (id)) engine=InnoDB
+Hibernate: create table student (id bigint not null auto_increment, email varchar(255), name varchar(255), password varchar(255), role varchar(255), username varchar(255), primary key (id)) engine=InnoDB
+Hibernate: create table teacher (id bigint not null auto_increment, email varchar(255), name varchar(255), password varchar(255), role varchar(255), username varchar(255), primary key (id)) engine=InnoDB
+2026-11-03T22:19:14.988+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-03T22:19:15.137+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-03T22:19:15.799+06:00  WARN 10248 --- [UniversityManagementSystem] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-11-03T22:19:16.069+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name applicationUserDetailsService
+2026-11-03T22:19:17.492+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-03T22:19:17.493+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-03T22:19:17.531+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-11-03T22:19:17.558+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 64 ms
+2026-11-03T22:19:17.948+06:00  INFO 10248 --- [UniversityManagementSystem] [           main] com.softeng.ums.it.TeacherApiCrudIT      : Started TeacherApiCrudIT in 12.92 seconds (process running for 143.229)
+Hibernate: select count(*) from admin a1_0
+Hibernate: insert into admin (email,name,password,role,username) values (?,?,?,?,?)
+Hibernate: select count(*) from teacher t1_0
+Hibernate: insert into teacher (email,name,password,role,username) values (?,?,?,?,?)
+Hibernate: select count(*) from student s1_0
+Hibernate: insert into student (email,name,password,role,username) values (?,?,?,?,?)
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+Hibernate: insert into teacher (email,name,password,role,username) values (?,?,?,?,?)
+Hibernate: select t1_0.id,t1_0.email,t1_0.name,t1_0.password,t1_0.role,t1_0.username from teacher t1_0 where t1_0.id=?
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 148.1 s -- in com.softeng.ums.it.TeacherApiCrudIT
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  02:34 min
+[INFO] Finished at: 2026-11-03T22:19:24+06:00
+[INFO] ------------------------------------------------------------------------
