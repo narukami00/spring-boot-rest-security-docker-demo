@@ -64,7 +64,7 @@ class TeacherApiCrudIT extends IntegrationBase {
         // CI exposed the wrong guess here (expected 200): REST DELETE answers
         // 204 No Content — the record is gone and there is nothing to return.
         mvc.perform(delete(location).with(csrf()))
-                .andExpect(status().isNoContent())
+                .andExpect(status().isOk()) // Intentional CI demonstration failure: DELETE returns 204.
                 .andExpect(content().string(""));
     }
 }
