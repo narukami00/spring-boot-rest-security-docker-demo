@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -60,9 +61,10 @@ class TeacherApiCrudIT extends IntegrationBase {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Fahim Updated"));
 
-        // Deliberately WRONG for now: the controller answers 204 No Content,
-        // not 200. CI exposes this; the fix commit corrects the expectation.
+        // CI exposed the wrong guess here (expected 200): REST DELETE answers
+        // 204 No Content — the record is gone and there is nothing to return.
         mvc.perform(delete(location).with(csrf()))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent())
+                .andExpect(content().string(""));
     }
 }
