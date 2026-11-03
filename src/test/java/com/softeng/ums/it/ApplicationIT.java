@@ -15,9 +15,11 @@ import org.springframework.test.web.servlet.MockMvc;
 /**
  * I1 — the whole Spring context must boot against a real MySQL 8.4 container,
  * and the DataSeeder must have created the demo admin in it.
+ *
+ * The @SpringBootTest / @AutoConfigureMockMvc / MockMvc configuration lives in
+ * IntegrationBase — redeclaring them here would override the base annotation
+ * and silently discard its preamble properties.
  */
-@SpringBootTest
-@AutoConfigureMockMvc
 @WithMockUser(roles = "ADMIN")
 class ApplicationIT extends IntegrationBase {
 
