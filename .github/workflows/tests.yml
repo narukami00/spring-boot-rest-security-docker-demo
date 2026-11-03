@@ -1,0 +1,39 @@
+name: Build and Test
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the source
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17 + Maven dependency cache
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      # Fast, no database needed. Runs every test whose class name ends
+      # in 'Tests' (Surefire's default includes).
+      - name: Unit tests (fast, no database)
+        run: ./mvnw --batch-mode test
+
+      # Integration phase: classes ending in 'IT' are NOT part of Surefire's
+      # default includes, so this flag keeps the phase green-empty for now
+      # (until commit 3 adds the first *IT class backed by Testcontainers).
+      - name: Integration tests (Testcontainers, MySQL 8.4)
+        run: ./mvnw --batch-mode test -Dtest="*IT" -Dsurefire.failIfNoSpecifiedTests=false
+
+      # Surefire writes XML + plain-text reports for every test, pass or fail.
+      # Uploading 'always()' keeps them available for inspection when red.
+      - name: Collect test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: '**/target/surefire-reports/**'
