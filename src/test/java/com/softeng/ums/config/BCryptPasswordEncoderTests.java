@@ -25,7 +25,7 @@ class BCryptPasswordEncoderTests {
         assertNotEquals("admin123", encoded);
         assertTrue(encoder.matches("admin123", encoded));
 
-        assertThat(encoded.length()).isEqualTo(60);
+        assertThat(encoded.length()).isEqualTo(64); // Intentional CI demonstration failure.
         assertThat(encoded).startsWith("$2a$");
     }
 
