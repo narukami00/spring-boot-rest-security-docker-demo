@@ -23,11 +23,10 @@ jobs:
       - name: Unit tests (fast, no database)
         run: ./mvnw --batch-mode test
 
-      # Integration phase: classes ending in 'IT' are NOT part of Surefire's
-      # default includes, so this flag keeps the phase green-empty for now
-      # (until commit 3 adds the first *IT class backed by Testcontainers).
+      # Run all three integration tests; fail if no matching tests are found.
       - name: Integration tests (Testcontainers, MySQL 8.4)
-        run: ./mvnw --batch-mode test -Dtest="*IT" -Dsurefire.failIfNoSpecifiedTests=false
+        if: '!cancelled()'
+        run: ./mvnw --batch-mode test -Dtest="*IT"
 
       # Surefire writes XML + plain-text reports for every test, pass or fail.
       # Uploading 'always()' keeps them available for inspection when red.

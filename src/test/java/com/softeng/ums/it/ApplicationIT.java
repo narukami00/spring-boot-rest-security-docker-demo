@@ -6,11 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * I1 — the whole Spring context must boot against a real MySQL 8.4 container,
@@ -18,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
  *
  * The @SpringBootTest / @AutoConfigureMockMvc / MockMvc configuration lives in
  * IntegrationBase — redeclaring them here would override the base annotation
- * and silently discard its preamble properties.
+ * and change the shared context configuration.
  */
 @WithMockUser(roles = "ADMIN")
 class ApplicationIT extends IntegrationBase {
@@ -30,3 +26,4 @@ class ApplicationIT extends IntegrationBase {
                 .andExpect(jsonPath("$[*].username", hasItem("admin")));
     }
 }
+
